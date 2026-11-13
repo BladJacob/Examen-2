@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Cálculo de Salario</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Horas trabajadas:</label>
+                        <input type="number" step="0.5" min="0" name="horas" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Pago por hora ($):</label>
+                        <input type="number" step="0.01" min="0" name="pago_hora" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Calcular Salario</button>
+                </form>
+
+                {% if resultado %}
+                    {% if resultado.error %}
+                        <div class="alert alert-danger mt-3">{{ resultado.error }}</div>
+                    {% else %}
+                        <div class="alert alert-info mt-3">
+                            <h5>Resultados:</h5>
+                            <ul class="list-unstyled mb-0">
+                                <li><strong>Horas Totales:</strong> {{ resultado.horas }} hrs</li>
+                                <li><strong>Pago por Hora:</strong> ${{ resultado.pago_hora }}</li>
+                                {% if resultado.horas_extra > 0 %}
+                                    <li class="text-danger"><strong>Horas Extra (al doble):</strong> {{ resultado.horas_extra }} hrs</li>
+                                {% endif %}
+                                <li class="fs-5 mt-2 border-top pt-2"><strong>Total a Pagar:</strong> <span class="text-success">${{ resultado.total }}</span></li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,1 +1,0 @@
-requiriments.txt
